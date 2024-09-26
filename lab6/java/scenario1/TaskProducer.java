@@ -35,13 +35,17 @@ public class TaskProducer implements Runnable {
 
     public void tostring() {
         System.out.println("Produtor " + (this.id));
-        System.out.println( this.tasksConcluidas);
-        System.out.println("Tempo médio: " + (this.tempoTotal / this.totalConcluido));
+        System.out.println(this.tasksConcluidas);
+        if (totalConcluido > 0) {
+            System.out.println("Tempo médio: " + (tempoTotal / totalConcluido) + " ms");
+        } else {
+            System.out.println("Nenhuma tarefa concluída.");
+        }
     }
 
     public void addTask(long tempo, long idTask) {
         this.totalConcluido += 1;
         this.tempoTotal += tempo;
-        this.tasksConcluidas += "task " + idTask + " concluída em: " + tempo + "\n";
+        this.tasksConcluidas += "task " + idTask + " concluída em: " + tempo + "ms\n";
     }
 }
