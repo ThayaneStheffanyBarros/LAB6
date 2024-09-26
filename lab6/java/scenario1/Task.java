@@ -1,24 +1,28 @@
 import java.util.Random;
-
 public class Task {
     long id;
-    long tempoInicial;
-    long duracao;
+    long tempoCriacao;
 
     public Task(long id) {
         this.id = id;
-        this.tempoInicial = System.currentTimeMillis();
+        this.tempoCriacao = System.currentTimeMillis();
     }
 
     public void execute() {
         try {
-            
-            // generating a number between 1000 and 15000
             long execDuration = 1000 + (long) (new Random().nextFloat() * (15000 - 1000));
             Thread.sleep(execDuration);
-            this.duracao = System.currentTimeMillis() - this.tempoInicial;
+            this.tempoCriacao = System.currentTimeMillis() - tempoCriacao;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getTotalTime() {
+        return System.currentTimeMillis() - this.tempoCriacao;
     }
 }
