@@ -4,9 +4,17 @@ import java.util.concurrent.BlockingQueue;
 public class TaskProducer implements Runnable {
     private final BlockingQueue<Task> fila;
     private static final int TIME_SLEEP = 5000;
+    private final int id;
+    private String tasksConcluidas;
+    private int totalConcluido;
+    private long tempoTotal;
 
-    public TaskProducer(BlockingQueue<Task> fila){
+    public TaskProducer(BlockingQueue<Task> fila, int id){
         this.fila = fila;
+        this.id = id;
+        this.tasksConcluidas = "";
+        this.totalConcluido = 0;
+        this.tempoTotal = 0;
     }
 
     @Override
@@ -14,7 +22,7 @@ public class TaskProducer implements Runnable {
         try{
             while(true) {
                 long id = new Random().nextLong();
-                Task task = new Task(id);
+                Task task = new Task(id, this);
                 fila.put(task);
                 Thread.sleep(TIME_SLEEP);
             }
@@ -23,5 +31,17 @@ public class TaskProducer implements Runnable {
             Thread.currentThread().interrupt();
 
         }
+    }
+
+    public void tostring() {
+        System.out.println("Produtor " + (this.id));
+        System.out.println( this.tasksConcluidas);
+        System.out.println("Tempo médio: " + (this.tempoTotal / this.totalConcluido));
+    }
+
+    public void addTask(long tempo, long idTask) {
+        this.totalConcluido += 1;
+        this.tempoTotal += tempo;
+        this.tasksConcluidas += "task " + idTask + " concluída em: " + tempo + "\n";
     }
 }

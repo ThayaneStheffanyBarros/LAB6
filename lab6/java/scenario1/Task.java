@@ -4,8 +4,9 @@ public class Task {
     long id;
     long tempoInicial;
     long duracao;
+    TaskProducer producer;
 
-    public Task(long id) {
+    public Task(long id, TaskProducer producer) {
         this.id = id;
         this.tempoInicial = System.currentTimeMillis();
     }
@@ -17,6 +18,7 @@ public class Task {
             long execDuration = 1000 + (long) (new Random().nextFloat() * (15000 - 1000));
             Thread.sleep(execDuration);
             this.duracao = System.currentTimeMillis() - this.tempoInicial;
+            producer.addTask(duracao, id);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
